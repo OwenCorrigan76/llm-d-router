@@ -165,6 +165,13 @@ func TestRedactBody(t *testing.T) {
 		}
 	})
 
+	t.Run("non-JSON exactly max length returned verbatim", func(t *testing.T) {
+		raw := strings.Repeat("q", maxRedactRawBodyLen)
+		if got := redactBody([]byte(raw)); got != raw {
+			t.Errorf("redactBody = %v, want verbatim (boundary is > not >=)", got)
+		}
+	})
+
 	t.Run("non-JSON over max length truncated", func(t *testing.T) {
 		raw := strings.Repeat("q", maxRedactRawBodyLen+50)
 		got, ok := redactBody([]byte(raw)).(string)

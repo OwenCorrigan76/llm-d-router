@@ -203,7 +203,7 @@ The "park in EPP rather than in model server local queue" design is what enables
 | Endpoint scoring | Weighted sum of plugin scores (0.0–1.0), each capped and combined | `pkg/epp/scheduling/weighted_scorer.go` |
 | Priority dispatch | Strict band ordering; round-robin within band | `pkg/epp/flowcontrol/` |
 | Request ordering within flow | FCFS list (default), EDF min-heap, SLO-deadline heap | `pkg/epp/framework/plugins/flowcontrol/ordering/` |
-| Latency prediction | XGBoost regression with stratified bucketing; ~5% MAPE | Sidecar to EPP via HTTP |
+| Latency prediction | XGBoost regression with stratified bucketing; ~5% | Sidecar to EPP via HTTP |
 | Event deduplication | Dedup filter before indexing | `pkg/kvevents/event_dedup_filter.go` |
 | Endpoint discovery | Kubernetes watch (default) or file watch (non-K8s) | `pkg/epp/controller/`, file-discovery plugin |
 

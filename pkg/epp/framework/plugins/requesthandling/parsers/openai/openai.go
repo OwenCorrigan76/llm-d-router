@@ -26,24 +26,24 @@ import (
 
 	v1 "sigs.k8s.io/gateway-api-inference-extension/api/v1"
 
+	"github.com/llm-d/llm-d-router/pkg/epp/framework/common/request"
 	fwkplugin "github.com/llm-d/llm-d-router/pkg/epp/framework/interface/plugin"
 	fwkrh "github.com/llm-d/llm-d-router/pkg/epp/framework/interface/requesthandling"
-	"github.com/llm-d/llm-d-router/pkg/epp/framework/common/request"
 	"github.com/llm-d/llm-d-router/pkg/epp/framework/plugins/requesthandling/parsers"
 )
 
 const (
 	OpenAIParserType = "openai-parser"
 
-	conversationsAPI   = "conversations"
-	responsesAPI       = "responses"
-	chatCompletionsAPI = "chat/completions"
-	completionsAPI     = "completions"
-	embeddingsAPI      = "embeddings"
+	conversationsAPI       = "conversations"
+	responsesAPI           = "responses"
+	chatCompletionsAPI     = "chat/completions"
+	completionsAPI         = "completions"
+	embeddingsAPI          = "embeddings"
 	imagesGenerationsAPI   = "images/generations"
 	audioTranscriptionsAPI = "audio/transcriptions"
-	inferenceAPI       = "inference"
-	audioSpeechAPI     = "audio/speech"
+	inferenceAPI           = "inference"
+	audioSpeechAPI         = "audio/speech"
 
 	streamingRespPrefix = "data: "
 	streamingEndMsg     = "data: [DONE]"
@@ -95,10 +95,10 @@ func (p *OpenAIParser) Claims() fwkrh.Claims {
 			conversationsAPI,
 			chatCompletionsAPI + "/render",
 			completionsAPI + "/render",
-			inferenceAPI,
+			imagesGenerationsAPI,
 			audioSpeechAPI,
 			audioTranscriptionsAPI,
-			imagesGenerationsAPI,
+			inferenceAPI,
 		},
 		Protocols: []v1.AppProtocol{v1.AppProtocolH2C, v1.AppProtocolHTTP},
 	}
@@ -283,7 +283,7 @@ func extractRequestBody(apiType string, rawBody []byte) (*fwkrh.InferenceRequest
 			return &fwkrh.InferenceRequestBody{Images: &images}, nil
 		}
 		return nil, errors.New("invalid images generations request: must have prompt field")
-	
+
 	case audioSpeechAPI, audioTranscriptionsAPI, inferenceAPI:
 		return &fwkrh.InferenceRequestBody{}, nil
 

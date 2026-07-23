@@ -981,6 +981,10 @@ func TestOpenAIParser_ParseRequest(t *testing.T) {
 					"num_inference_steps": float64(30),
 					"guidance_scale":      7.5,
 					"seed":                float64(42),
+				},
+			},
+		},
+		{
 			name:    "audio speech request",
 			headers: map[string]string{":path": "/v1/audio/speech"},
 			body: map[string]any{
@@ -1008,8 +1012,11 @@ func TestOpenAIParser_ParseRequest(t *testing.T) {
 				},
 				Payload: fwkrh.PayloadMap{
 					"prompt": "a dog",
-			
-					name:    "audio transcriptions request",
+				},
+			},
+		},
+		{
+			name:    "audio transcriptions request",
 			headers: map[string]string{":path": "/v1/audio/transcriptions"},
 			body: map[string]any{
 				"model":    "whisper-1",
@@ -1056,7 +1063,8 @@ func TestOpenAIParser_ParseRequest(t *testing.T) {
 				"prompt": "",
 			},
 			wantErr: true,
-
+		},
+		{
 			name:    "generic inference request",
 			headers: map[string]string{":path": "/v1/inference"},
 			body: map[string]any{
